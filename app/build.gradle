@@ -1,0 +1,66 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "30.0.2"
+
+    defaultConfig {
+        applicationId "com.augumenta.demo.smartmarkerdemo"
+        minSdkVersion 24
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters  'armeabi-v7a'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    configurations {
+        all*.exclude group: 'com.google.guava', module: 'listenablefuture'
+    }
+    packagingOptions {
+        pickFirst 'lib/armeabi-v7a/libUVCCamera.so'
+        pickFirst 'lib/x86/libUVCCamera.so'
+        exclude 'META-INF/DEPENDENCIES'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation files('libs/agapi-3.6.2.aar')
+//    implementation files('libs/libusbcommon_v4.1.1.aar')
+
+    implementation 'com.android.support:multidex:2.0.1'
+    implementation 'com.google.zxing:core:3.3.1'
+    implementation "com.journeyapps:zxing-android-embedded:3.3.0"
+
+    implementation files('libs\\commons-cli-1.4.jar')
+    implementation files('libs\\commons-codec-1.15.jar')
+    implementation files('libs\\httpclient5-5.1.2.jar')
+    implementation files('libs\\httpclient5-cache-5.1.2.jar')
+    implementation files('libs\\httpclient5-fluent-5.1.2.jar')
+    implementation files('libs\\httpcore5-5.1.2.jar')
+    implementation files('libs\\commons-net-3.8.0.jar')
+    implementation 'org.slf4j:slf4j-api:1.7.25'
+
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation project(path: ':libusbcamera')
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}
